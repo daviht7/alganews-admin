@@ -1,5 +1,6 @@
 import { Area, AreaConfig } from '@ant-design/charts';
 import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import { MetricService } from 'daviht7-sdk';
 import { useEffect, useState } from 'react';
 import transformDataIntoAntdChart from '../../core/utils/transformDataIntoAntdChart';
@@ -27,6 +28,30 @@ export default function CompanyMetrics() {
     xField: 'yearMonth',
     yField: 'value',
     seriesField: 'category',
+    yAxis: false,
+    tooltip: {
+      title(title) {
+        return format(new Date(title), 'MMMM yyyy', {
+          locale: ptBR,
+        });
+      },
+      formatter(data) {
+        return {
+          name:
+            data.category === 'totalRevenues'
+              ? 'Receitas'
+              : 'Despesas',
+          value: (data.value as number).toLocaleString(
+            'pt-BR',
+            {
+              currency: 'BRL',
+              style: 'currency',
+              maximumFractionDigits: 2,
+            }
+          ),
+        };
+      },
+    },
     legend: {
       itemName: {
         formatter(legend) {
