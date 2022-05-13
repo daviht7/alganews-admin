@@ -1,4 +1,5 @@
 import { Area, AreaConfig } from '@ant-design/charts';
+import { format } from 'date-fns';
 import { MetricService } from 'daviht7-sdk';
 import { useEffect, useState } from 'react';
 import transformDataIntoAntdChart from '../../core/utils/transformDataIntoAntdChart';
@@ -32,6 +33,13 @@ export default function CompanyMetrics() {
           return legend === 'totalRevenues'
             ? 'Receitas'
             : 'Despesas';
+        },
+      },
+    },
+    xAxis: {
+      label: {
+        formatter(item) {
+          return format(new Date(item), 'MM/yyyy');
         },
       },
     },
