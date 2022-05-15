@@ -12,7 +12,7 @@ export default function LatestPosts() {
     <Row gutter={16}>
       {posts?.map((post) => {
         return (
-          <Col xs={24} md={8}>
+          <Col xs={24} md={8} key={post.id}>
             <Card
               key={post.id}
               cover={
@@ -27,6 +27,7 @@ export default function LatestPosts() {
               }
             >
               <Card.Meta
+                key={post.id}
                 title={post.title}
                 avatar={
                   <Avatar
