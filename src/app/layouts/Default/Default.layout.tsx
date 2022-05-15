@@ -1,5 +1,4 @@
 import { Layout } from 'antd';
-import App from '../../../App';
 import DefaultLayoutBreadcrumb from './components/Breadcrumb';
 import DefaultLayoutContent from './components/Content';
 import DefaultLayoutHeader from './components/Header';
@@ -20,7 +19,7 @@ export default function DefaultLayout({
         <Layout style={{ padding: '0 24px 24px' }}>
           <DefaultLayoutBreadcrumb />
           <DefaultLayoutContent>
-            <App />
+            {children}
           </DefaultLayoutContent>
         </Layout>
       </Layout>
