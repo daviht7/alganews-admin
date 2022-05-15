@@ -24,7 +24,7 @@ export default function CompanyMetrics() {
     data,
     color: ['#0099ff', '#274060'],
     areaStyle: { fillOpacity: 1 },
-    height: 400,
+    height: 256,
     xField: 'yearMonth',
     yField: 'value',
     seriesField: 'category',
