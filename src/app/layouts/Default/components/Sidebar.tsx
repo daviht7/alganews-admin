@@ -10,7 +10,7 @@ import {
 } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import SubMenu from 'antd/lib/menu/SubMenu';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const { Sider } = Layout;
 
@@ -35,7 +35,7 @@ export default function LayoutDefaultSidebar() {
           icon={<HomeOutlined />}
           onClick={() => history('/')}
         >
-          Home
+          <Link to='/'>Home</Link>
         </Menu.Item>
         <SubMenu
           key='1'
@@ -47,14 +47,14 @@ export default function LayoutDefaultSidebar() {
             icon={<TableOutlined />}
             onClick={() => history('/usuarios')}
           >
-            Consulta
+            <Link to='/usuarios'>Consulta</Link>
           </Menu.Item>
           <Menu.Item
             key='/usuarios/criacao'
             icon={<PlusCircleOutlined />}
             onClick={() => history('/usuarios/criacao')}
           >
-            Cadastro
+            <Link to='/usuarios/criacao'>Cadastro</Link>
           </Menu.Item>
         </SubMenu>
         <SubMenu
@@ -67,14 +67,14 @@ export default function LayoutDefaultSidebar() {
             icon={<TableOutlined />}
             onClick={() => history('/pagamentos')}
           >
-            Consulta
+            <Link to='/pagamentos'>Consulta</Link>
           </Menu.Item>
           <Menu.Item
             key='/pagamentos/criacao'
             icon={<PlusCircleOutlined />}
             onClick={() => history('/pagamentos/criacao')}
           >
-            Cadastro
+            <Link to='/pagamentos/criacao'>Cadastro</Link>
           </Menu.Item>
         </SubMenu>
         <SubMenu
@@ -89,7 +89,9 @@ export default function LayoutDefaultSidebar() {
               history('/fluxo-de-caixa/despesas')
             }
           >
-            Despesa
+            <Link to='/fluxo-de-caixa/despesas'>
+              Despesa
+            </Link>
           </Menu.Item>
           <Menu.Item
             key='/fluxo-de-caixa/receitas'
@@ -98,7 +100,9 @@ export default function LayoutDefaultSidebar() {
               history('/fluxo-de-caixa/receitas')
             }
           >
-            Receita
+            <Link to='/fluxo-de-caixa/receitas'>
+              Receita
+            </Link>
           </Menu.Item>
         </SubMenu>
       </Menu>
