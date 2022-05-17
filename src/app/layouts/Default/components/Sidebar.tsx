@@ -10,12 +10,18 @@ import {
 } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import SubMenu from 'antd/lib/menu/SubMenu';
-import { Link, useNavigate } from 'react-router-dom';
+import {
+  Link,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 
 const { Sider } = Layout;
 
 export default function LayoutDefaultSidebar() {
   const history = useNavigate();
+
+  const location = useLocation();
 
   return (
     <Sider
@@ -25,9 +31,10 @@ export default function LayoutDefaultSidebar() {
       collapsedWidth='0'
     >
       <Menu
+        key='/'
         mode='inline'
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={['sub1']}
+        defaultSelectedKeys={[location.pathname]}
+        defaultOpenKeys={[location.pathname.split('/')[1]]}
         style={{ height: '100%', borderRight: 0 }}
       >
         <Menu.Item
@@ -38,7 +45,7 @@ export default function LayoutDefaultSidebar() {
           <Link to='/'>Home</Link>
         </Menu.Item>
         <SubMenu
-          key='1'
+          key='usuarios'
           icon={<UserOutlined />}
           title='Usuários'
         >
@@ -58,7 +65,7 @@ export default function LayoutDefaultSidebar() {
           </Menu.Item>
         </SubMenu>
         <SubMenu
-          key='sub2'
+          key='pagamentos'
           icon={<LaptopOutlined />}
           title='Pagamentos'
         >
@@ -78,7 +85,7 @@ export default function LayoutDefaultSidebar() {
           </Menu.Item>
         </SubMenu>
         <SubMenu
-          key='sub3'
+          key='fluxo-de-caixa'
           icon={<DiffOutlined />}
           title='Fluxo de caixa'
         >
