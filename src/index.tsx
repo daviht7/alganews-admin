@@ -1,4 +1,3 @@
-import 'antd/dist/antd.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -6,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import DefaultLayout from './app/layouts/Default/Default.layout';
 import Routes from './app/routes';
 import { store } from './core/store';
-import './index.css';
+import './index.less';
 
 ReactDOM.render(
   <React.StrictMode>
