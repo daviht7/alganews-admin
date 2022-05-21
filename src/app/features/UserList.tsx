@@ -1,13 +1,20 @@
-import { Button, Switch, Table, Tag } from 'antd';
+import {
+  EditOutlined,
+  EyeOutlined,
+} from '@ant-design/icons';
+import {
+  Avatar,
+  Button,
+  Space,
+  Switch,
+  Table,
+  Tag,
+  Typography,
+} from 'antd';
 import { format } from 'date-fns';
 import { User } from 'daviht7-sdk';
 import { useEffect } from 'react';
 import useUsers from '../../core/hooks/useUsers';
-
-import {
-  EyeOutlined,
-  EditOutlined,
-} from '@ant-design/icons';
 
 export default function UserList() {
   const { users, fetchUsers } = useUsers();
@@ -24,6 +31,17 @@ export default function UserList() {
           {
             dataIndex: 'name',
             title: 'Nome',
+            render(name: string, row) {
+              return (
+                <Space>
+                  <Avatar
+                    size={'small'}
+                    src={row.avatarUrls.small}
+                  />
+                  <Typography.Text>{name}</Typography.Text>
+                </Space>
+              );
+            },
           },
           {
             dataIndex: 'email',
