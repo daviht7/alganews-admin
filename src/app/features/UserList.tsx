@@ -17,7 +17,8 @@ import { useEffect } from 'react';
 import useUsers from '../../core/hooks/useUsers';
 
 export default function UserList() {
-  const { users, fetchUsers } = useUsers();
+  const { users, fetchUsers, toogleUserStatus } =
+    useUsers();
 
   useEffect(() => {
     fetchUsers();
@@ -90,8 +91,15 @@ export default function UserList() {
             dataIndex: 'active',
             title: 'Ativo',
             align: 'center',
-            render(active: boolean) {
-              return <Switch defaultChecked={active} />;
+            render(active: boolean, user) {
+              return (
+                <Switch
+                  defaultChecked={active}
+                  onChange={() => {
+                    toogleUserStatus(user);
+                  }}
+                />
+              );
             },
           },
           {

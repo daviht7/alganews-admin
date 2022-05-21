@@ -1,3 +1,4 @@
+import { User } from 'daviht7-sdk';
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
@@ -17,9 +18,17 @@ export default function useUsers() {
     dispatch(UserActions.getAllUsers() as any);
   }, [dispatch]);
 
+  const toogleUserStatus = useCallback(
+    (user: User.Detailed | User.Summary) => {
+      dispatch(UserActions.toogleUserStatus(user) as any);
+    },
+    [dispatch]
+  );
+
   return {
     fetchUsers,
     users,
     fetching,
+    toogleUserStatus,
   };
 }

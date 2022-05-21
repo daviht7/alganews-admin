@@ -22,10 +22,22 @@ export const getAllUsers = createAsyncThunk(
   async () => UserService.getAllUsers()
 );
 
+export const toogleUserStatus = createAsyncThunk(
+  'user/toogleUserStatus',
+  async (user: User.Summary | User.Detailed) => {
+    user.active
+      ? UserService.deactivateExistingUser(user.id)
+      : UserService.activateExistingUser(user.id);
+  }
+);
+
 export default createReducer(initialState, (builder) => {
-  const success = isFulfilled(getAllUsers);
-  const error = isRejected(getAllUsers);
-  const loading = isPending(getAllUsers);
+  const success = isFulfilled(
+    getAllUsers,
+    toogleUserStatus
+  );
+  const error = isRejected(getAllUsers, toogleUserStatus);
+  const loading = isPending(getAllUsers, toogleUserStatus);
 
   builder
     .addCase(getAllUsers.fulfilled, (state, action) => {
