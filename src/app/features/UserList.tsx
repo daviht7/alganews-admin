@@ -38,7 +38,12 @@ export default function UserList() {
                     size={'small'}
                     src={row.avatarUrls.small}
                   />
-                  <Typography.Text>{name}</Typography.Text>
+                  <Typography.Text
+                    ellipsis
+                    style={{ maxWidth: 180 }}
+                  >
+                    {name}
+                  </Typography.Text>
                 </Space>
               );
             },
@@ -46,6 +51,7 @@ export default function UserList() {
           {
             dataIndex: 'email',
             title: 'Email',
+            ellipsis: true,
           },
           {
             dataIndex: 'role',
