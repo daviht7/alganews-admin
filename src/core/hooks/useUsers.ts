@@ -19,8 +19,11 @@ export default function useUsers() {
   }, [dispatch]);
 
   const toogleUserStatus = useCallback(
-    (user: User.Detailed | User.Summary) => {
-      dispatch(UserActions.toogleUserStatus(user) as any);
+    async (user: User.Detailed | User.Summary) => {
+      await dispatch(
+        UserActions.toogleUserStatus(user) as any
+      );
+      await dispatch(UserActions.getAllUsers() as any);
     },
     [dispatch]
   );
