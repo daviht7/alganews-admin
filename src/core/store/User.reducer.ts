@@ -26,8 +26,10 @@ export const toogleUserStatus = createAsyncThunk(
   'user/toogleUserStatus',
   async (user: User.Summary | User.Detailed) => {
     user.active
-      ? UserService.deactivateExistingUser(user.id)
-      : UserService.activateExistingUser(user.id);
+      ? await UserService.deactivateExistingUser(user.id)
+      : await UserService.activateExistingUser(user.id);
+
+    return user;
   }
 );
 

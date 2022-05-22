@@ -91,6 +91,7 @@ export default function UserList() {
             dataIndex: 'active',
             title: 'Ativo',
             align: 'center',
+
             render(active: boolean, user) {
               return (
                 <Switch
