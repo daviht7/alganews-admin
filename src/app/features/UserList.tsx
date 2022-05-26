@@ -21,7 +21,7 @@ import { useEffect } from 'react';
 import useUsers from '../../core/hooks/useUsers';
 
 export default function UserList() {
-  const { users, fetchUsers, toogleUserStatus } =
+  const { users, fetchUsers, toogleUserStatus, fetching } =
     useUsers();
 
   useEffect(() => {
@@ -90,6 +90,7 @@ export default function UserList() {
   return (
     <>
       <Table<User.Summary>
+        loading={fetching}
         dataSource={users}
         columns={[
           {
