@@ -1,16 +1,20 @@
 import {
   EditOutlined,
   EyeOutlined,
+  SearchOutlined,
 } from '@ant-design/icons';
 import {
   Avatar,
   Button,
+  Card,
+  Input,
   Space,
   Switch,
   Table,
   Tag,
   Typography,
 } from 'antd';
+import { ColumnProps } from 'antd/lib/table';
 import { format } from 'date-fns';
 import { User } from 'daviht7-sdk';
 import { useEffect } from 'react';
@@ -24,6 +28,65 @@ export default function UserList() {
     fetchUsers();
   }, [fetchUsers]);
 
+  const getColumnSearchProps = (
+    dataIndex: keyof User.Summary,
+    displayName?: string
+  ): ColumnProps<User.Summary> => ({
+    filterDropdown: ({
+      selectedKeys,
+      setSelectedKeys,
+      confirm,
+      clearFilters,
+    }) => (
+      <Card>
+        <Input
+          value={selectedKeys[0]}
+          onChange={(e) => {
+            setSelectedKeys(
+              e.target.value ? [e.target.value] : []
+            );
+          }}
+          placeholder={`Buscar ${
+            displayName || dataIndex
+          } `}
+          onPressEnter={() => confirm()}
+          style={{ marginBottom: 8, display: 'block' }}
+        />
+        <Space>
+          <Button
+            type='primary'
+            size='small'
+            style={{ width: 80 }}
+            onClick={() => confirm()}
+            icon={<SearchOutlined />}
+          >
+            Buscar
+          </Button>
+          <Button
+            onClick={clearFilters}
+            size='small'
+            style={{ width: 80 }}
+          >
+            Limpar
+          </Button>
+        </Space>
+      </Card>
+    ),
+    filterIcon: (filtered: boolean) => (
+      <SearchOutlined
+        style={{ color: filtered ? '#0099ff' : undefined }}
+      />
+    ),
+    // @ts-ignore
+    onFilter: (value, record) =>
+      record[dataIndex]
+        ? record[dataIndex]
+            .toString()
+            .toLowerCase()
+            .includes((value as string).toLowerCase())
+        : '',
+  });
+
   return (
     <>
       <Table<User.Summary>
@@ -33,6 +96,7 @@ export default function UserList() {
             dataIndex: 'name',
             title: 'Nome',
             width: 160,
+            ...getColumnSearchProps('name', 'Nome'),
             render(name: string, row) {
               return (
                 <Space>
@@ -54,7 +118,8 @@ export default function UserList() {
             dataIndex: 'email',
             title: 'Email',
             ellipsis: true,
-            width: 160,
+            width: 240,
+            ...getColumnSearchProps('email', 'Email'),
           },
           {
             dataIndex: 'role',
