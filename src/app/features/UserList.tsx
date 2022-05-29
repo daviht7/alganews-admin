@@ -8,6 +8,7 @@ import {
   Avatar,
   Card,
   Input,
+  Descriptions,
 } from 'antd';
 import { User } from 'daviht7-sdk';
 import format from 'date-fns/format';
@@ -94,11 +95,60 @@ export default function UserList() {
         pagination={false}
         columns={[
           {
+            title: 'Usuários',
+            responsive: ['xs'],
+            render(user: User.Summary) {
+              return (
+                <Descriptions column={1} size={'small'}>
+                  <Descriptions.Item label={'Nome'}>
+                    {user.name}
+                  </Descriptions.Item>
+                  <Descriptions.Item label={'Email'}>
+                    {user.email}
+                  </Descriptions.Item>
+                  <Descriptions.Item label={'Criação'}>
+                    {format(
+                      parseISO(user.createdAt),
+                      'dd/MM/yyyy'
+                    )}
+                  </Descriptions.Item>
+                  <Descriptions.Item label={'Perfil'}>
+                    {
+                      <Tag
+                        color={
+                          user.role === 'MANAGER'
+                            ? 'red'
+                            : 'blue'
+                        }
+                      >
+                        {user.role === 'EDITOR'
+                          ? 'Editor'
+                          : user.role === 'MANAGER'
+                          ? 'Gerente'
+                          : 'Assistente'}
+                      </Tag>
+                    }
+                  </Descriptions.Item>
+                  <Descriptions.Item label={'Ações'}>
+                    <Button
+                      size='small'
+                      icon={<EyeOutlined />}
+                    />
+                    <Button
+                      size='small'
+                      icon={<EditOutlined />}
+                    />
+                  </Descriptions.Item>
+                </Descriptions>
+              );
+            },
+          },
+          {
             dataIndex: 'avatarUrls',
             title: '',
             width: 48,
             fixed: 'left',
-            responsive: ['xs'],
+            responsive: ['sm'],
             render(avatarUrls: User.Summary['avatarUrls']) {
               return (
                 <Avatar
@@ -114,11 +164,12 @@ export default function UserList() {
             ...getColumnSearchProps('name', 'nome'),
             width: 160,
             ellipsis: true,
+            responsive: ['sm'],
           },
           {
             dataIndex: 'email',
             title: 'Email',
-            responsive: ['md'],
+            responsive: ['sm'],
             ellipsis: true,
             width: 240,
             ...getColumnSearchProps('email', 'Email'),
@@ -127,6 +178,7 @@ export default function UserList() {
             dataIndex: 'role',
             title: 'Perfil',
             align: 'center',
+            responsive: ['sm'],
             width: 100,
             render(role) {
               return (
@@ -148,7 +200,7 @@ export default function UserList() {
             dataIndex: 'createdAt',
             title: 'Criação',
             align: 'center',
-            responsive: ['lg'],
+            responsive: ['sm'],
             width: 120,
             render(createdAt: string) {
               return format(
@@ -161,6 +213,7 @@ export default function UserList() {
             dataIndex: 'active',
             title: 'Ativo',
             align: 'center',
+            responsive: ['sm'],
             width: 100,
             render(active: boolean, user) {
               return (
@@ -177,6 +230,7 @@ export default function UserList() {
             dataIndex: 'id',
             title: 'Ações',
             align: 'center',
+            responsive: ['sm'],
             width: 100,
             render() {
               return (
