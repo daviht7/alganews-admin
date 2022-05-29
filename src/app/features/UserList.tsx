@@ -97,26 +97,25 @@ export default function UserList() {
         dataSource={users}
         columns={[
           {
-            dataIndex: 'name',
-            title: 'Nome',
-            width: 160,
-            ...getColumnSearchProps('name', 'Nome'),
-            render(name: string, row) {
+            dataIndex: 'avatarUrls',
+            title: '',
+            fixed: 'left',
+            width: 48,
+            render(avatarUrls: User.Summary['avatarUrls']) {
               return (
-                <Space>
-                  <Avatar
-                    size={'small'}
-                    src={row.avatarUrls.small}
-                  />
-                  <Typography.Text
-                    ellipsis
-                    style={{ maxWidth: 120 }}
-                  >
-                    {name}
-                  </Typography.Text>
-                </Space>
+                <Avatar
+                  size={'small'}
+                  src={avatarUrls.small}
+                />
               );
             },
+          },
+          {
+            dataIndex: 'name',
+            title: 'Nome',
+            width: 240,
+            ...getColumnSearchProps('name', 'Nome'),
+            ellipsis: true,
           },
           {
             dataIndex: 'email',
@@ -128,6 +127,7 @@ export default function UserList() {
           {
             dataIndex: 'role',
             title: 'Perfil',
+            width: 100,
             align: 'center',
             render(role) {
               return (
@@ -148,6 +148,7 @@ export default function UserList() {
           {
             dataIndex: 'createdAt',
             title: 'Criação',
+            width: 120,
             align: 'center',
             render(createdAt: string) {
               return format(
@@ -160,7 +161,7 @@ export default function UserList() {
             dataIndex: 'active',
             title: 'Ativo',
             align: 'center',
-
+            width: 120,
             render(active: boolean, user) {
               return (
                 <Switch
@@ -176,6 +177,7 @@ export default function UserList() {
             dataIndex: 'id',
             title: 'Ações',
             align: 'center',
+            width: 100,
             render() {
               return (
                 <>
