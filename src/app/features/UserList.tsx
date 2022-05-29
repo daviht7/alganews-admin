@@ -1,24 +1,25 @@
 import {
-  EditOutlined,
-  EyeOutlined,
-  SearchOutlined,
-} from '@ant-design/icons';
-import {
-  Avatar,
   Button,
-  Card,
-  Input,
   Space,
   Switch,
   Table,
   Tag,
   Typography,
+  Avatar,
+  Card,
+  Input,
 } from 'antd';
-import { ColumnProps } from 'antd/lib/table';
-import { format } from 'date-fns';
 import { User } from 'daviht7-sdk';
+import format from 'date-fns/format';
+import parseISO from 'date-fns/parseISO';
 import { useEffect } from 'react';
 import useUsers from '../../core/hooks/useUsers';
+import {
+  EyeOutlined,
+  EditOutlined,
+  SearchOutlined,
+} from '@ant-design/icons';
+import { ColumnProps } from 'antd/lib/table';
 
 export default function UserList() {
   const { users, fetchUsers, toogleUserStatus, fetching } =
@@ -40,23 +41,21 @@ export default function UserList() {
     }) => (
       <Card>
         <Input
+          style={{ marginBottom: 8, display: 'block' }}
           value={selectedKeys[0]}
+          placeholder={`Buscar ${displayName || dataIndex}`}
           onChange={(e) => {
             setSelectedKeys(
               e.target.value ? [e.target.value] : []
             );
           }}
-          placeholder={`Buscar ${
-            displayName || dataIndex
-          } `}
           onPressEnter={() => confirm()}
-          style={{ marginBottom: 8, display: 'block' }}
         />
         <Space>
           <Button
-            type='primary'
-            size='small'
-            style={{ width: 80 }}
+            type={'primary'}
+            size={'small'}
+            style={{ width: 90 }}
             onClick={() => confirm()}
             icon={<SearchOutlined />}
           >
@@ -64,8 +63,8 @@ export default function UserList() {
           </Button>
           <Button
             onClick={clearFilters}
-            size='small'
-            style={{ width: 80 }}
+            size={'small'}
+            style={{ width: 90 }}
           >
             Limpar
           </Button>
@@ -91,16 +90,15 @@ export default function UserList() {
     <>
       <Table<User.Summary>
         loading={fetching}
-        pagination={{
-          pageSize: 4,
-        }}
         dataSource={users}
+        pagination={false}
         columns={[
           {
             dataIndex: 'avatarUrls',
             title: '',
-            fixed: 'left',
             width: 48,
+            fixed: 'left',
+            responsive: ['xs'],
             render(avatarUrls: User.Summary['avatarUrls']) {
               return (
                 <Avatar
@@ -113,13 +111,14 @@ export default function UserList() {
           {
             dataIndex: 'name',
             title: 'Nome',
-            width: 240,
-            ...getColumnSearchProps('name', 'Nome'),
+            ...getColumnSearchProps('name', 'nome'),
+            width: 160,
             ellipsis: true,
           },
           {
             dataIndex: 'email',
             title: 'Email',
+            responsive: ['md'],
             ellipsis: true,
             width: 240,
             ...getColumnSearchProps('email', 'Email'),
@@ -127,18 +126,18 @@ export default function UserList() {
           {
             dataIndex: 'role',
             title: 'Perfil',
-            width: 100,
             align: 'center',
+            width: 100,
             render(role) {
               return (
                 <Tag
                   color={
-                    role === 'MANAGER' ? 'red' : 'success'
+                    role === 'MANAGER' ? 'red' : 'blue'
                   }
                 >
                   {role === 'EDITOR'
                     ? 'Editor'
-                    : role === 'Manager'
+                    : role === 'MANAGER'
                     ? 'Gerente'
                     : 'Assistente'}
                 </Tag>
@@ -148,11 +147,12 @@ export default function UserList() {
           {
             dataIndex: 'createdAt',
             title: 'Criação',
-            width: 120,
             align: 'center',
+            responsive: ['lg'],
+            width: 120,
             render(createdAt: string) {
               return format(
-                new Date(createdAt),
+                parseISO(createdAt),
                 'dd/MM/yyyy'
               );
             },
@@ -161,14 +161,14 @@ export default function UserList() {
             dataIndex: 'active',
             title: 'Ativo',
             align: 'center',
-            width: 120,
+            width: 100,
             render(active: boolean, user) {
               return (
                 <Switch
-                  defaultChecked={active}
                   onChange={() => {
                     toogleUserStatus(user);
                   }}
+                  defaultChecked={active}
                 />
               );
             },
