@@ -70,7 +70,40 @@ export default function UserForm() {
             <Tabs.TabPane
               key={'personal'}
               tab={'Dados Pessoais'}
-            ></Tabs.TabPane>
+            >
+              <Row gutter={24}>
+                <Col lg={8}>
+                  <Form.Item label={'País'}>
+                    <Input placeholder='E.g: Brasil' />
+                  </Form.Item>
+                </Col>
+                <Col lg={8}>
+                  <Form.Item label={'Estado'}>
+                    <Input placeholder='E.g: Ceará' />
+                  </Form.Item>
+                </Col>
+                <Col lg={8}>
+                  <Form.Item label={'Cidade'}>
+                    <Input placeholder='E.g: Fortaleza' />
+                  </Form.Item>
+                </Col>
+                <Col lg={8}>
+                  <Form.Item label={'Telefone'}>
+                    <Input placeholder='E.g: (85)99418-5335' />
+                  </Form.Item>
+                </Col>
+                <Col lg={8}>
+                  <Form.Item label={'CPF'}>
+                    <Input placeholder='E.g: 888.888.888-88' />
+                  </Form.Item>
+                </Col>
+                <Col lg={8}>
+                  <Form.Item label={'Preço por palavra'}>
+                    <Input placeholder='E.g: 0,00' />
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Tabs.TabPane>
             <Tabs.TabPane
               key={'bankAccount'}
               tab={'Dados Bancários'}
