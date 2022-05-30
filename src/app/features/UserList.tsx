@@ -1,26 +1,25 @@
 import {
+  EditOutlined,
+  EyeOutlined,
+  SearchOutlined,
+} from '@ant-design/icons';
+import {
+  Avatar,
   Button,
+  Card,
+  Descriptions,
+  Input,
   Space,
   Switch,
   Table,
   Tag,
-  Typography,
-  Avatar,
-  Card,
-  Input,
-  Descriptions,
 } from 'antd';
-import { User } from 'daviht7-sdk';
+import { ColumnProps } from 'antd/lib/table';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
+import { User } from 'daviht7-sdk';
 import { useEffect } from 'react';
 import useUsers from '../../core/hooks/useUsers';
-import {
-  EyeOutlined,
-  EditOutlined,
-  SearchOutlined,
-} from '@ant-design/icons';
-import { ColumnProps } from 'antd/lib/table';
 
 export default function UserList() {
   const { users, fetchUsers, toogleUserStatus, fetching } =
