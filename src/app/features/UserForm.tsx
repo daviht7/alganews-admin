@@ -7,6 +7,7 @@ import {
   Input,
   Row,
   Select,
+  Tabs,
 } from 'antd';
 
 export default function UserForm() {
@@ -44,7 +45,7 @@ export default function UserForm() {
               <Select.Option value={'ASSISTANT'}>
                 Assistente
               </Select.Option>
-              <Select.Option value={'Manager'}>
+              <Select.Option value={'MANAGER'}>
                 Gerente
               </Select.Option>
             </Select>
@@ -57,6 +58,24 @@ export default function UserForm() {
               placeholder={'E.g: contato@joao.com.br'}
             />
           </Form.Item>
+        </Col>
+        <Col lg={24}>
+          <Divider />
+        </Col>
+        <Col lg={24}>
+          <Tabs
+            defaultActiveKey='personal'
+            onChange={() => {}}
+          >
+            <Tabs.TabPane
+              key={'personal'}
+              tab={'Dados Pessoais'}
+            ></Tabs.TabPane>
+            <Tabs.TabPane
+              key={'bankAccount'}
+              tab={'Dados Bancários'}
+            ></Tabs.TabPane>
+          </Tabs>
         </Col>
       </Row>
     </Form>
