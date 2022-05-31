@@ -126,7 +126,46 @@ export default function UserForm() {
             <Tabs.TabPane
               key={'bankAccount'}
               tab={'Dados Bancários'}
-            ></Tabs.TabPane>
+            >
+              <Row gutter={24}>
+                <Col lg={8}>
+                  <Form.Item label={'Instituição'}>
+                    <Input placeholder={'260'} />
+                  </Form.Item>
+                </Col>
+                <Col lg={8}>
+                  <Form.Item label={'Agência'}>
+                    <Input placeholder={'0001'} />
+                  </Form.Item>
+                </Col>
+                <Col lg={8}>
+                  <Form.Item label={'Conta sem dígito'}>
+                    <Input placeholder={'12345'} />
+                  </Form.Item>
+                </Col>
+                <Col lg={8}>
+                  <Form.Item label={'Dígito'}>
+                    <Input placeholder={'1'} />
+                  </Form.Item>
+                </Col>
+                <Col lg={8}>
+                  <Form.Item label={'Tipo de conta'}>
+                    <Select
+                      placeholder={
+                        'Selecione o tipo de conta'
+                      }
+                    >
+                      <Select.Option value={'SAVING'}>
+                        Conta poupança
+                      </Select.Option>
+                      <Select.Option value={'CHECKING'}>
+                        Conta corrente
+                      </Select.Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Tabs.TabPane>
           </Tabs>
         </Col>
       </Row>
