@@ -9,6 +9,7 @@ import {
   Select,
   Tabs,
 } from 'antd';
+import React from 'react';
 
 export default function UserForm() {
   return (
@@ -102,6 +103,24 @@ export default function UserForm() {
                     <Input placeholder='E.g: 0,00' />
                   </Form.Item>
                 </Col>
+                {Array(3)
+                  .fill(null)
+                  .map((_, index) => {
+                    return (
+                      <React.Fragment key={index}>
+                        <Col lg={6}>
+                          <Form.Item label={'Habilidade'}>
+                            <Input placeholder='E.g: JavaScript' />
+                          </Form.Item>
+                        </Col>
+                        <Col lg={2}>
+                          <Form.Item label={'%'}>
+                            <Input />
+                          </Form.Item>
+                        </Col>
+                      </React.Fragment>
+                    );
+                  })}
               </Row>
             </Tabs.TabPane>
             <Tabs.TabPane
