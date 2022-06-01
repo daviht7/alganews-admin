@@ -11,6 +11,7 @@ import {
   Tabs,
   Upload,
 } from 'antd';
+import ImageCrop from 'antd-img-crop';
 import { FileService } from 'daviht7-sdk';
 import React, { useCallback, useState } from 'react';
 
@@ -29,22 +30,24 @@ export default function UserForm() {
     <Form layout='vertical'>
       <Row gutter={24} align={'middle'}>
         <Col lg={4}>
-          <Upload
-            onRemove={() => {
-              setAvatar('');
-            }}
-            beforeUpload={async (file) => {
-              await handleAvatarUpload(file);
-              return false;
-            }}
-          >
-            <Avatar
-              size={128}
-              src={avatar}
-              style={{ cursor: 'pointer' }}
-              icon={<UserOutlined />}
-            />
-          </Upload>
+          <ImageCrop rotate shape='round' grid aspect={1}>
+            <Upload
+              onRemove={() => {
+                setAvatar('');
+              }}
+              beforeUpload={async (file) => {
+                await handleAvatarUpload(file);
+                return false;
+              }}
+            >
+              <Avatar
+                size={128}
+                src={avatar}
+                style={{ cursor: 'pointer' }}
+                icon={<UserOutlined />}
+              />
+            </Upload>
+          </ImageCrop>
         </Col>
         <Col lg={10}>
           <Form.Item label={'Nome'}>
