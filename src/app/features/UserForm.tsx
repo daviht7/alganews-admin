@@ -1,3 +1,4 @@
+import { UserOutlined } from '@ant-design/icons';
 import {
   Avatar,
   Col,
@@ -8,15 +9,42 @@ import {
   Row,
   Select,
   Tabs,
+  Upload,
 } from 'antd';
-import React from 'react';
+import { FileService } from 'daviht7-sdk';
+import React, { useCallback, useState } from 'react';
 
 export default function UserForm() {
+  const [avatar, setAvatar] = useState<string>('');
+
+  const handleAvatarUpload = useCallback(
+    async (file: File) => {
+      const avatarSource = await FileService.upload(file);
+      setAvatar(avatarSource);
+    },
+    []
+  );
+
   return (
     <Form layout='vertical'>
       <Row gutter={24} align={'middle'}>
         <Col lg={4}>
-          <Avatar size={128} />
+          <Upload
+            onRemove={() => {
+              setAvatar('');
+            }}
+            beforeUpload={async (file) => {
+              await handleAvatarUpload(file);
+              return false;
+            }}
+          >
+            <Avatar
+              size={128}
+              src={avatar}
+              style={{ cursor: 'pointer' }}
+              icon={<UserOutlined />}
+            />
+          </Upload>
         </Col>
         <Col lg={10}>
           <Form.Item label={'Nome'}>
