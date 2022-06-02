@@ -1,6 +1,7 @@
 import { UserOutlined } from '@ant-design/icons';
 import {
   Avatar,
+  Button,
   Col,
   DatePicker,
   Divider,
@@ -27,7 +28,10 @@ export default function UserForm() {
   );
 
   return (
-    <Form layout='vertical'>
+    <Form
+      layout='vertical'
+      onFinish={(form) => console.log('form', form)}
+    >
       <Row gutter={24} align={'middle'}>
         <Col lg={4}>
           <ImageCrop rotate shape='round' grid aspect={1}>
@@ -51,10 +55,13 @@ export default function UserForm() {
           </ImageCrop>
         </Col>
         <Col lg={10}>
-          <Form.Item label={'Nome'}>
+          <Form.Item label={'Nome'} name={'name'}>
             <Input placeholder={'E.g.: João Silva'} />
           </Form.Item>
-          <Form.Item label={'Data de nascimento'}>
+          <Form.Item
+            label={'Data de nascimento'}
+            name={'birthdate'}
+          >
             <DatePicker
               style={{ width: '100%' }}
               format={'DD/MM/YYYY'}
@@ -62,7 +69,7 @@ export default function UserForm() {
           </Form.Item>
         </Col>
         <Col lg={10}>
-          <Form.Item label={'Bio'}>
+          <Form.Item label={'Bio'} name={'bio'}>
             <Input.TextArea rows={5} />
           </Form.Item>
         </Col>
@@ -70,7 +77,7 @@ export default function UserForm() {
           <Divider />
         </Col>
         <Col lg={12}>
-          <Form.Item label={'Perfil'}>
+          <Form.Item label={'Perfil'} name={'role'}>
             <Select placeholder={'Selecione um perfil'}>
               <Select.Option value={'EDITOR'}>
                 Editor
@@ -85,7 +92,7 @@ export default function UserForm() {
           </Form.Item>
         </Col>
         <Col lg={12}>
-          <Form.Item label={'Email'}>
+          <Form.Item label={'Email'} name={'email'}>
             <Input
               type='email'
               placeholder={'E.g: contato@joao.com.br'}
@@ -106,32 +113,50 @@ export default function UserForm() {
             >
               <Row gutter={24}>
                 <Col lg={8}>
-                  <Form.Item label={'País'}>
+                  <Form.Item
+                    label={'País'}
+                    name={['location', 'country']}
+                  >
                     <Input placeholder='E.g: Brasil' />
                   </Form.Item>
                 </Col>
                 <Col lg={8}>
-                  <Form.Item label={'Estado'}>
+                  <Form.Item
+                    label={'Estado'}
+                    name={['location', 'state']}
+                  >
                     <Input placeholder='E.g: Ceará' />
                   </Form.Item>
                 </Col>
                 <Col lg={8}>
-                  <Form.Item label={'Cidade'}>
+                  <Form.Item
+                    label={'Cidade'}
+                    name={['location', 'city']}
+                  >
                     <Input placeholder='E.g: Fortaleza' />
                   </Form.Item>
                 </Col>
                 <Col lg={8}>
-                  <Form.Item label={'Telefone'}>
+                  <Form.Item
+                    label={'Telefone'}
+                    name={'phone'}
+                  >
                     <Input placeholder='E.g: (85)99418-5335' />
                   </Form.Item>
                 </Col>
                 <Col lg={8}>
-                  <Form.Item label={'CPF'}>
+                  <Form.Item
+                    label={'CPF'}
+                    name={'taxpayerId'}
+                  >
                     <Input placeholder='E.g: 888.888.888-88' />
                   </Form.Item>
                 </Col>
                 <Col lg={8}>
-                  <Form.Item label={'Preço por palavra'}>
+                  <Form.Item
+                    label={'Preço por palavra'}
+                    name={'pricePerWord'}
+                  >
                     <Input placeholder='E.g: 0,00' />
                   </Form.Item>
                 </Col>
@@ -141,12 +166,22 @@ export default function UserForm() {
                     return (
                       <React.Fragment key={index}>
                         <Col lg={6}>
-                          <Form.Item label={'Habilidade'}>
+                          <Form.Item
+                            label={'Habilidade'}
+                            name={['skills', index, 'name']}
+                          >
                             <Input placeholder='E.g: JavaScript' />
                           </Form.Item>
                         </Col>
                         <Col lg={2}>
-                          <Form.Item label={'%'}>
+                          <Form.Item
+                            label={'%'}
+                            name={[
+                              'skills',
+                              index,
+                              'percentage',
+                            ]}
+                          >
                             <Input />
                           </Form.Item>
                         </Col>
@@ -199,6 +234,14 @@ export default function UserForm() {
               </Row>
             </Tabs.TabPane>
           </Tabs>
+        </Col>
+
+        <Col lg={24}>
+          <Row justify='end'>
+            <Button type={'primary'} htmlType={'submit'}>
+              Cadastrar usuário
+            </Button>
+          </Row>
         </Col>
       </Row>
     </Form>
