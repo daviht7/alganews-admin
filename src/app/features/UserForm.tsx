@@ -32,11 +32,12 @@ export default function UserForm() {
         <Col lg={4}>
           <ImageCrop rotate shape='round' grid aspect={1}>
             <Upload
+              maxCount={1}
               onRemove={() => {
                 setAvatar('');
               }}
-              beforeUpload={async (file) => {
-                await handleAvatarUpload(file);
+              beforeUpload={(file) => {
+                handleAvatarUpload(file);
                 return false;
               }}
             >
