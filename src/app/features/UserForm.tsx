@@ -193,30 +193,46 @@ export default function UserForm() {
             <Tabs.TabPane
               key={'bankAccount'}
               tab={'Dados Bancários'}
+              forceRender={true}
             >
               <Row gutter={24}>
                 <Col lg={8}>
-                  <Form.Item label={'Instituição'}>
+                  <Form.Item
+                    label={'Instituição'}
+                    name={['bankAccount', 'bankCode']}
+                  >
                     <Input placeholder={'260'} />
                   </Form.Item>
                 </Col>
                 <Col lg={8}>
-                  <Form.Item label={'Agência'}>
+                  <Form.Item
+                    label={'Agência'}
+                    name={['bankAccount', 'agency']}
+                  >
                     <Input placeholder={'0001'} />
                   </Form.Item>
                 </Col>
                 <Col lg={8}>
-                  <Form.Item label={'Conta sem dígito'}>
+                  <Form.Item
+                    label={'Conta sem dígito'}
+                    name={['bankAccount', 'number']}
+                  >
                     <Input placeholder={'12345'} />
                   </Form.Item>
                 </Col>
                 <Col lg={8}>
-                  <Form.Item label={'Dígito'}>
+                  <Form.Item
+                    label={'Dígito'}
+                    name={['bankAccount', 'digit']}
+                  >
                     <Input placeholder={'1'} />
                   </Form.Item>
                 </Col>
                 <Col lg={8}>
-                  <Form.Item label={'Tipo de conta'}>
+                  <Form.Item
+                    label={'Tipo de conta'}
+                    name={['bankAccount', 'type']}
+                  >
                     <Select
                       placeholder={
                         'Selecione o tipo de conta'
