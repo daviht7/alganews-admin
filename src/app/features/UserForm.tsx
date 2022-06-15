@@ -40,9 +40,28 @@ export default function UserForm() {
           0
         );
 
+        const personalDataErrors =
+          fields.errorFields.reduce(
+            (prev, current) =>
+              current.name.includes('location') ||
+              current.name.includes('skills') ||
+              current.name.includes('phone') ||
+              current.name.includes('taxpayerId') ||
+              current.name.includes('pricePerWord')
+                ? prev + 1
+                : prev,
+            0
+          );
+
         if (bankAccountErrors > 0) {
           window.alert(
             `Existem ${bankAccountErrors} erros na aba dados bancários.`
+          );
+        }
+
+        if (personalDataErrors > 0) {
+          window.alert(
+            `Existem ${personalDataErrors} erros na aba dados pessoais.`
           );
         }
       }}
