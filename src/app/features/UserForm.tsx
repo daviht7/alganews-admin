@@ -13,11 +13,16 @@ import {
   Upload,
 } from 'antd';
 import ImageCrop from 'antd-img-crop';
-import { FileService } from 'daviht7-sdk';
+import { FileService, User } from 'daviht7-sdk';
 import React, { useCallback, useState } from 'react';
+import { useEffect } from 'react';
 
 export default function UserForm() {
+  const [form] = Form.useForm<User.Input>();
   const [avatar, setAvatar] = useState<string>('');
+  const [activeTab, setActiveTab] = useState<
+    'personal' | 'bankAccount'
+  >('personal');
 
   const handleAvatarUpload = useCallback(
     async (file: File) => {
@@ -27,42 +32,42 @@ export default function UserForm() {
     []
   );
 
+  useEffect(() => {
+    form.setFieldsValue({
+      avatarUrl: avatar || undefined,
+    });
+  }, [avatar]);
+
   return (
     <Form
+      form={form}
       layout='vertical'
       onFinish={(form) => console.log('form', form)}
       onFinishFailed={(fields) => {
-        const bankAccountErrors = fields.errorFields.reduce(
-          (prev, current) =>
-            current.name.includes('bankAccount')
-              ? prev + 1
-              : prev,
-          0
-        );
+        let bankAccountErrors = 0;
+        let pessoalDataErrors = 0;
 
-        const personalDataErrors =
-          fields.errorFields.reduce(
-            (prev, current) =>
-              current.name.includes('location') ||
-              current.name.includes('skills') ||
-              current.name.includes('phone') ||
-              current.name.includes('taxpayerId') ||
-              current.name.includes('pricePerWord')
-                ? prev + 1
-                : prev,
-            0
-          );
+        fields.errorFields.forEach(({ name }) => {
+          if (name.includes('bankAccount')) {
+            bankAccountErrors++;
+          }
+          if (
+            name.includes('location') ||
+            name.includes('skills') ||
+            name.includes('phone') ||
+            name.includes('taxpayerId') ||
+            name.includes('pricePerWord')
+          ) {
+            pessoalDataErrors++;
+          }
+        });
 
-        if (bankAccountErrors > 0) {
-          window.alert(
-            `Existem ${bankAccountErrors} erros na aba dados bancários.`
-          );
+        if (bankAccountErrors > pessoalDataErrors) {
+          setActiveTab('bankAccount');
         }
 
-        if (personalDataErrors > 0) {
-          window.alert(
-            `Existem ${personalDataErrors} erros na aba dados pessoais.`
-          );
+        if (pessoalDataErrors > bankAccountErrors) {
+          setActiveTab('personal');
         }
       }}
     >
@@ -87,6 +92,7 @@ export default function UserForm() {
               />
             </Upload>
           </ImageCrop>
+          <Form.Item name={'avatarUrl'} hidden={true} />
         </Col>
         <Col lg={10}>
           <Form.Item
@@ -180,8 +186,13 @@ export default function UserForm() {
         </Col>
         <Col lg={24}>
           <Tabs
+            activeKey={activeTab}
             defaultActiveKey='personal'
-            onChange={() => {}}
+            onChange={(tab) =>
+              setActiveTab(
+                tab as 'personal' | 'bankAccount'
+              )
+            }
           >
             <Tabs.TabPane
               key={'personal'}
