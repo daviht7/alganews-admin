@@ -7,15 +7,24 @@ import {
   Divider,
   Form,
   Input,
+  notification,
   Row,
   Select,
   Tabs,
   Upload,
 } from 'antd';
 import ImageCrop from 'antd-img-crop';
-import { FileService, User } from 'daviht7-sdk';
-import React, { useCallback, useState } from 'react';
-import { useEffect } from 'react';
+import {
+  FileService,
+  User,
+  UserService,
+} from 'daviht7-sdk';
+import CustomError from 'daviht7-sdk/dist/CustomError';
+import React, {
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 
 export default function UserForm() {
   const [form] = Form.useForm<User.Input>();
@@ -42,7 +51,34 @@ export default function UserForm() {
     <Form
       form={form}
       layout='vertical'
-      onFinish={(form) => console.log('form', form)}
+      onFinish={async (user: User.Input) => {
+        try {
+          await UserService.insertNewUser(user);
+          notification.success({
+            message: 'Sucesso',
+            description: 'Usuário criado com sucesso!',
+          });
+        } catch (error) {
+          if (error instanceof CustomError) {
+            if (error.data?.objects) {
+              form.setFields(
+                error.data.objects.map((error) => {
+                  return {
+                    name: error.name?.split(
+                      '.'
+                    ) as string[],
+                    errors: [error.userMessage],
+                  };
+                })
+              );
+            }
+          } else {
+            notification.error({
+              message: 'Houve um erro',
+            });
+          }
+        }
+      }}
       onFinishFailed={(fields) => {
         let bankAccountErrors = 0;
         let pessoalDataErrors = 0;
@@ -92,7 +128,9 @@ export default function UserForm() {
               />
             </Upload>
           </ImageCrop>
-          <Form.Item name={'avatarUrl'} hidden={true} />
+          <Form.Item name={'avatarUrl'} hidden>
+            <Input hidden />
+          </Form.Item>
         </Col>
         <Col lg={10}>
           <Form.Item
