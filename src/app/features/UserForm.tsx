@@ -64,9 +64,20 @@ export default function UserForm() {
               form.setFields(
                 error.data.objects.map((error) => {
                   return {
-                    name: error.name?.split(
-                      '.'
-                    ) as string[],
+                    name: error.name
+                      ?.split(/(\.|\[|\])/gi)
+                      .filter(
+                        (str) =>
+                          str !== '.' &&
+                          str !== '[' &&
+                          str !== ']' &&
+                          str !== ''
+                      )
+                      .map((str) =>
+                        isNaN(Number(str))
+                          ? str
+                          : Number(str)
+                      ) as string[],
                     errors: [error.userMessage],
                   };
                 })
@@ -170,6 +181,16 @@ export default function UserForm() {
                 required: true,
                 message: 'o Campo é obrigatório.',
               },
+              {
+                max: 255,
+                message:
+                  'o tamanho máximo do campo é 255 caracteres.',
+              },
+              {
+                min: 10,
+                message:
+                  'o tamanho mínimo do campo é 10 caracteres.',
+              },
             ]}
           >
             <Input.TextArea rows={5} />
@@ -186,6 +207,11 @@ export default function UserForm() {
               {
                 required: true,
                 message: 'o Campo é obrigatório.',
+              },
+              {
+                type: 'enum',
+                enum: ['EDITOR', 'ASSISTANT', 'MANAGER'],
+                message: `Perfil precisa ser Editor, Assistente ou Gerente`,
               },
             ]}
           >
