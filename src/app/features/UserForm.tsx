@@ -14,6 +14,7 @@ import {
   Upload,
 } from 'antd';
 import ImageCrop from 'antd-img-crop';
+import { MaskedInput } from 'antd-mask-input';
 import {
   FileService,
   User,
@@ -51,6 +52,7 @@ export default function UserForm() {
     <Form
       form={form}
       layout='vertical'
+      autoComplete={'off'}
       onFinish={async (user: User.Input) => {
         try {
           await UserService.insertNewUser(user);
@@ -316,7 +318,10 @@ export default function UserForm() {
                       },
                     ]}
                   >
-                    <Input placeholder='E.g: (85)99418-5335' />
+                    <MaskedInput
+                      mask='(00) 00000-0000'
+                      placeholder='E.g: (85)99418-5335'
+                    />
                   </Form.Item>
                 </Col>
                 <Col lg={8}>
@@ -330,7 +335,10 @@ export default function UserForm() {
                       },
                     ]}
                   >
-                    <Input placeholder='E.g: 888.888.888-88' />
+                    <MaskedInput
+                      mask='000.000.000-00'
+                      placeholder='E.g: 058.804.783-00'
+                    />
                   </Form.Item>
                 </Col>
                 <Col lg={8}>
