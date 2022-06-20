@@ -321,6 +321,14 @@ export default function UserForm() {
                     <MaskedInput
                       mask='(00) 00000-0000'
                       placeholder='E.g: (85)99418-5335'
+                      onChange={(event) => {
+                        form.setFieldsValue({
+                          phone: event.target.value.replace(
+                            /\D/g,
+                            ''
+                          ),
+                        });
+                      }}
                     />
                   </Form.Item>
                 </Col>
@@ -338,6 +346,15 @@ export default function UserForm() {
                     <MaskedInput
                       mask='000.000.000-00'
                       placeholder='E.g: 058.804.783-00'
+                      onChange={(event) => {
+                        form.setFieldsValue({
+                          taxpayerId:
+                            event.target.value.replace(
+                              /\D/g,
+                              ''
+                            ),
+                        });
+                      }}
                     />
                   </Form.Item>
                 </Col>
