@@ -418,15 +418,21 @@ export default function UserForm() {
                                   if (
                                     isNaN(Number(value))
                                   ) {
-                                    throw 'Apenas Números';
+                                    throw new Error(
+                                      'Apenas Números'
+                                    );
                                   }
 
                                   if (Number(value) > 100) {
-                                    throw 'Até 100!';
+                                    throw new Error(
+                                      'Até 100!'
+                                    );
                                   }
 
                                   if (Number(value) < 0) {
-                                    throw 'Mínimo é 0!';
+                                    throw new Error(
+                                      'Mínimo é 0!'
+                                    );
                                   }
                                 },
                               },

@@ -4,8 +4,11 @@ import {
   isFulfilled,
   isPending,
   isRejected,
+  PayloadAction
 } from '@reduxjs/toolkit';
+import { notification } from 'antd';
 import { User, UserService } from 'daviht7-sdk';
+import CustomError from 'daviht7-sdk/dist/CustomError';
 
 interface UserState {
   list: User.Summary[];
@@ -19,7 +22,7 @@ const initialState: UserState = {
 
 export const getAllUsers = createAsyncThunk(
   'user/getAllUsers',
-  async () => UserService.getAllUsers()
+    async() => UserService.getAllUsers()
 );
 
 export const toogleUserStatus = createAsyncThunk(
@@ -48,8 +51,12 @@ export default createReducer(initialState, (builder) => {
     .addMatcher(success, (state) => {
       state.fetching = false;
     })
-    .addMatcher(error, (state) => {
+    .addMatcher(error,
+      (state, action) => {
       state.fetching = false;
+      notification.error({
+        message: action.error.message
+      })
     })
     .addMatcher(loading, (state) => {
       state.fetching = true;
