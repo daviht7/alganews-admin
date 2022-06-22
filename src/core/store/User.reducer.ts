@@ -3,12 +3,9 @@ import {
   createReducer,
   isFulfilled,
   isPending,
-  isRejected,
-  PayloadAction
+  isRejected
 } from '@reduxjs/toolkit';
-import { notification } from 'antd';
 import { User, UserService } from 'daviht7-sdk';
-import CustomError from 'daviht7-sdk/dist/CustomError';
 
 interface UserState {
   list: User.Summary[];
@@ -54,9 +51,6 @@ export default createReducer(initialState, (builder) => {
     .addMatcher(error,
       (state, action) => {
       state.fetching = false;
-      notification.error({
-        message: action.error.message
-      })
     })
     .addMatcher(loading, (state) => {
       state.fetching = true;
