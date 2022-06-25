@@ -177,6 +177,9 @@ export default function UserList() {
           {
             dataIndex: 'role',
             title: 'Perfil',
+            sorter(a, b) {
+              return a.role.localeCompare(b.role);
+            },
             align: 'center',
             responsive: ['sm'],
             width: 100,
@@ -200,6 +203,12 @@ export default function UserList() {
             dataIndex: 'createdAt',
             title: 'Criação',
             align: 'center',
+            sorter(a, b) {
+              return new Date(a.createdAt) >
+                new Date(b.createdAt)
+                ? 1
+                : -1;
+            },
             responsive: ['sm'],
             width: 120,
             render(createdAt: string) {
