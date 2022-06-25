@@ -9,6 +9,7 @@ import PaymentCreateView from './views/PaymentCreate.view';
 import PaymentListView from './views/PaymentList.view';
 import UserCreateView from './views/UserCreate.view';
 import UserListView from './views/UserList.view';
+import UserEditView from './views/UserEdit.view';
 
 export default function Routes() {
   useEffect(() => {
@@ -38,6 +39,10 @@ export default function Routes() {
       <Route
         path={'/usuarios/criacao'}
         element={<UserCreateView />}
+      />
+      <Route
+        path={'/usuarios/edicao/:id'}
+        element={<UserEditView />}
       />
       <Route
         path={'/usuarios'}

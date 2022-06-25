@@ -27,7 +27,13 @@ import React, {
   useState,
 } from 'react';
 
-export default function UserForm() {
+type UserFormType = User.Detailed;
+
+interface UserFormProps {
+  user?: UserFormType;
+}
+
+export default function UserForm(props: UserFormProps) {
   const [form] = Form.useForm<User.Input>();
   const [avatar, setAvatar] = useState<string>('');
   const [activeTab, setActiveTab] = useState<
@@ -124,6 +130,7 @@ export default function UserForm() {
           setActiveTab('personal');
         }
       }}
+      initialValues={props.user}
     >
       <Row gutter={24} align={'middle'}>
         <Col lg={4}>
@@ -163,7 +170,7 @@ export default function UserForm() {
           >
             <Input placeholder={'E.g.: João Silva'} />
           </Form.Item>
-          <Form.Item
+          {/*<Form.Item
             label={'Data de nascimento'}
             name={'birthdate'}
             rules={[
@@ -177,7 +184,7 @@ export default function UserForm() {
               style={{ width: '100%' }}
               format={'DD/MM/YYYY'}
             />
-          </Form.Item>
+          </Form.Item>*/}
         </Col>
         <Col lg={10}>
           <Form.Item
