@@ -1,7 +1,9 @@
 import UserForm from '../features/UserForm';
 import useUser from '../../core/hooks/useUser';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Skeleton } from 'antd';
+import { User } from 'daviht7-sdk';
+import moment from 'moment';
 export default function UserEditView() {
   const { user, fetchUser } = useUser();
 
@@ -9,9 +11,23 @@ export default function UserEditView() {
     fetchUser(1);
   }, []);
 
+  const transformUserData = useCallback(
+    (user: User.Detailed) => {
+      return {
+        ...user,
+        createdAt: moment(user.createdAt),
+        updatedAt: moment(user.updatedAt),
+        birthdate: moment(user.birthdate),
+      };
+    },
+    []
+  );
+
   if (!user) {
     return <Skeleton />;
   }
 
-  return <UserForm user={user}></UserForm>;
+  return (
+    <UserForm user={transformUserData(user)}></UserForm>
+  );
 }

@@ -27,7 +27,16 @@ import React, {
   useState,
 } from 'react';
 
-type UserFormType = User.Detailed;
+import { Moment } from 'moment';
+
+type UserFormType = {
+  createdAt: Moment;
+  updatedAt: Moment;
+  birthdate: Moment;
+} & Omit<
+  User.Detailed,
+  'createdAt' | 'updatedAt' | 'birthdate'
+>;
 
 interface UserFormProps {
   user?: UserFormType;
@@ -170,7 +179,8 @@ export default function UserForm(props: UserFormProps) {
           >
             <Input placeholder={'E.g.: João Silva'} />
           </Form.Item>
-          {/*<Form.Item
+
+          <Form.Item
             label={'Data de nascimento'}
             name={'birthdate'}
             rules={[
@@ -184,7 +194,7 @@ export default function UserForm(props: UserFormProps) {
               style={{ width: '100%' }}
               format={'DD/MM/YYYY'}
             />
-          </Form.Item>*/}
+          </Form.Item>
         </Col>
         <Col lg={10}>
           <Form.Item
