@@ -40,6 +40,7 @@ type UserFormType = {
 
 interface UserFormProps {
   user?: UserFormType;
+  onUpdate?: (user: User.Input) => any;
 }
 
 export default function UserForm(props: UserFormProps) {
@@ -71,6 +72,10 @@ export default function UserForm(props: UserFormProps) {
       layout='vertical'
       autoComplete={'off'}
       onFinish={async (user: User.Input) => {
+        if (props.user) {
+          return props.onUpdate && props.onUpdate(user);
+        }
+
         try {
           await UserService.insertNewUser(user);
           notification.success({

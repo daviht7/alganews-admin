@@ -1,8 +1,8 @@
 import UserForm from '../features/UserForm';
 import useUser from '../../core/hooks/useUser';
 import { useCallback, useEffect } from 'react';
-import { Skeleton } from 'antd';
-import { User } from 'daviht7-sdk';
+import { notification, Skeleton } from 'antd';
+import { User, UserService } from 'daviht7-sdk';
 import moment from 'moment';
 export default function UserEditView() {
   const { user, fetchUser } = useUser();
@@ -23,11 +23,22 @@ export default function UserEditView() {
     []
   );
 
+  function handleUserUpdate(user: User.Input) {
+    UserService.updateExistingUser(1, user).then(() => {
+      notification.success({
+        message: 'o Usuário foi alterado com sucesso!',
+      });
+    });
+  }
+
   if (!user) {
     return <Skeleton />;
   }
 
   return (
-    <UserForm user={transformUserData(user)}></UserForm>
+    <UserForm
+      onUpdate={handleUserUpdate}
+      user={transformUserData(user)}
+    ></UserForm>
   );
 }
