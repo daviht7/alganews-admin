@@ -1,15 +1,23 @@
-import UserForm from '../features/UserForm';
-import useUser from '../../core/hooks/useUser';
-import { useCallback, useEffect } from 'react';
 import { notification, Skeleton } from 'antd';
 import { User, UserService } from 'daviht7-sdk';
 import moment from 'moment';
+import { useCallback, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import useUser from '../../core/hooks/useUser';
+import UserForm from '../features/UserForm';
+
 export default function UserEditView() {
+  const params = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const { user, fetchUser } = useUser();
 
   useEffect(() => {
-    fetchUser(1);
-  }, []);
+    if (!isNaN(Number(params.id))) {
+      fetchUser(Number(params.id));
+    } else {
+      navigate('/usuarios');
+    }
+  }, [fetchUser, params.id]);
 
   const transformUserData = useCallback(
     (user: User.Detailed) => {
@@ -22,6 +30,13 @@ export default function UserEditView() {
     },
     []
   );
+
+  console.log('', params.id);
+
+  if (isNaN(Number(params.id))) {
+    console.log('entrou');
+    navigate('/usuarios');
+  }
 
   function handleUserUpdate(user: User.Input) {
     UserService.updateExistingUser(1, user).then(() => {
