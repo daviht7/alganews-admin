@@ -13,12 +13,14 @@ import {
   Switch,
   Table,
   Tag,
+  Tooltip,
 } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 import { User } from 'daviht7-sdk';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import useUsers from '../../core/hooks/useUsers';
 
 export default function UserList() {
@@ -241,17 +243,29 @@ export default function UserList() {
             align: 'center',
             responsive: ['sm'],
             width: 100,
-            render() {
+            render(id: number) {
               return (
                 <>
-                  <Button
-                    size='small'
-                    icon={<EyeOutlined />}
-                  />
-                  <Button
-                    size='small'
-                    icon={<EditOutlined />}
-                  />
+                  <Tooltip
+                    title={'Visualizar usuário'}
+                    placement={'left'}
+                  >
+                    <Button
+                      size='small'
+                      icon={<EyeOutlined />}
+                    />
+                  </Tooltip>
+                  <Tooltip
+                    title={'Editar usuário'}
+                    placement={'right'}
+                  >
+                    <Link to={`/usuarios/edicao/${id}`}>
+                      <Button
+                        size='small'
+                        icon={<EditOutlined />}
+                      />
+                    </Link>
+                  </Tooltip>
                 </>
               );
             },
