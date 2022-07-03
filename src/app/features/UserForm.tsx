@@ -575,7 +575,9 @@ export default function UserForm(props: UserFormProps) {
         <Col lg={24}>
           <Row justify='end'>
             <Button type={'primary'} htmlType={'submit'}>
-              Cadastrar usuário
+              {props.user
+                ? 'Atualizar Usuário'
+                : 'Cadastrar Usuário'}
             </Button>
           </Row>
         </Col>
