@@ -1,4 +1,4 @@
-import { notification, Skeleton } from 'antd';
+import { Card, notification, Skeleton } from 'antd';
 import { User, UserService } from 'daviht7-sdk';
 import moment from 'moment';
 import { useCallback, useEffect } from 'react';
@@ -9,7 +9,7 @@ import UserForm from '../features/UserForm';
 export default function UserEditView() {
   const params = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { user, fetchUser } = useUser();
+  const { user, fetchUser, notFound } = useUser();
 
   useEffect(() => {
     if (!isNaN(Number(params.id))) {
@@ -31,7 +31,9 @@ export default function UserEditView() {
     []
   );
 
-  console.log('', params.id);
+  if (notFound) {
+    return <Card>Usuário não encontrado</Card>;
+  }
 
   if (isNaN(Number(params.id))) {
     console.log('entrou');
